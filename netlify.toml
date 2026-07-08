@@ -5,13 +5,6 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-[build]
-  command   = "npm run build"
-  publish   = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
-
 [build.environment]
   # Set Node version to match the runtime used during development.
   # Override in Netlify UI → Site settings → Build & deploy → Environment if needed.
@@ -25,4 +18,3 @@
   # scanning. Build-output and non-source paths are omitted as well.
   SECRETS_SCAN_OMIT_KEYS = "ADMIN_USERNAME"
   SECRETS_SCAN_OMIT_PATHS = ".kiro,__tests__,node_modules,.netlify"
-
