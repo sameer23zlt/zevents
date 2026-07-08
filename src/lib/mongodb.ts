@@ -24,7 +24,7 @@ if (!uri) {
   );
 }
 
-const DB_NAME = process.env.MONGODB_DB ?? "enzin";
+const DB_NAME = process.env.MONGODB_DB;
 
 async function ensureIndexes(db: Db) {
   await db
