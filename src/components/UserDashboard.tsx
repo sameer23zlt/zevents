@@ -8,7 +8,6 @@ import {
   Card,
   CardContent,
   Chip,
-  Grid,
   Stack,
   Typography,
   Alert,
@@ -112,11 +111,17 @@ export default function UserDashboard() {
         <Alert severity="info">No events have been created yet.</Alert>
       )}
 
-      <Grid container spacing={2}>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" },
+          gap: 2,
+          justifyContent: "center",
+        }}
+      >
         {events.map((ev) => (
-          <Grid item xs={12} sm={6} key={ev._id}>
-            <Card variant="outlined" sx={{ height: "100%" }}>
-              <CardContent>
+          <Card variant="outlined" key={ev._id} sx={{ height: "100%" }}>
+            <CardContent>
                 <Stack
                   direction="row"
                   justifyContent="space-between"
@@ -198,9 +203,8 @@ export default function UserDashboard() {
                 </Box>
               </CardContent>
             </Card>
-          </Grid>
         ))}
-      </Grid>
+      </Box>
 
       <Dialog
         open={!!modalEvent}
