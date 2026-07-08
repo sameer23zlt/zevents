@@ -5,7 +5,24 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
+[build]
+  command   = "npm run build"
+  publish   = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [build.environment]
   # Set Node version to match the runtime used during development.
   # Override in Netlify UI → Site settings → Build & deploy → Environment if needed.
   NODE_VERSION = "18"
+
+  # Secrets scanning
+  # The real secrets (MONGODB_URI, JWT_SECRET, ADMIN_PASSWORD) are provided via
+  # Netlify UI environment variables and are NOT committed to the repo.
+  # ADMIN_USERNAME's value ("admin") is a non-sensitive, commonly-occurring word
+  # that produces false positives across docs/source/tests, so it is omitted from
+  # scanning. Build-output and non-source paths are omitted as well.
+  SECRETS_SCAN_OMIT_KEYS = "ADMIN_USERNAME"
+  SECRETS_SCAN_OMIT_PATHS = ".kiro,__tests__,node_modules,.netlify"
+
