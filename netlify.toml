@@ -1,0 +1,11 @@
+[build]
+  command   = "npm run build"
+  publish   = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  # Set Node version to match the runtime used during development.
+  # Override in Netlify UI → Site settings → Build & deploy → Environment if needed.
+  NODE_VERSION = "18"

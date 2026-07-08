@@ -1,0 +1,19 @@
+{
+  "name": "Zevents",
+  "short_name": "Zevents",
+  "description": "Community sports event management — football, cricket & more",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f6f8",
+  "theme_color": "#1565c0",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
