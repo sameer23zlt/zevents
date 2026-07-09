@@ -12,6 +12,10 @@ declare namespace NodeJS {
     ADMIN_USERNAME: string;
     /** Fixed admin password stored in configuration */
     ADMIN_PASSWORD: string;
+    /** UPI ID the admin receives payments to (e.g. 326567235@axisx) */
+    UPI_ID: string;
+    /** Optional UPI payee name; falls back to ADMIN_USERNAME */
+    UPI_NAME?: string;
     /** Next.js environment */
     NODE_ENV: "development" | "production" | "test";
   }

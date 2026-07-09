@@ -23,6 +23,7 @@ import {
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import PeopleIcon from "@mui/icons-material/People";
+import PaymentsIcon from "@mui/icons-material/Payments";
 
 interface EventItem {
   _id: string;
@@ -49,6 +50,7 @@ export default function UserDashboard() {
     fetcher
   );
   const [pendingId, setPendingId] = useState<string | null>(null);
+  const [payingId, setPayingId] = useState<string | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
 
   const [modalEvent, setModalEvent] = useState<EventItem | null>(null);
@@ -85,6 +87,29 @@ export default function UserDashboard() {
       if (res.ok) setAttendees(body);
     } finally {
       setLoadingAttendees(false);
+    }
+  };
+
+  const handlePay = async (ev: EventItem) => {
+    setPayingId(ev._id);
+    setActionError(null);
+    try {
+      const res = await fetch("/api/payment-config");
+      const cfg = await res.json();
+      if (!res.ok) {
+        setActionError(cfg.error ?? "Payment not configured");
+        return;
+      }
+      const upiUrl =
+        `upi://pay?pa=${encodeURIComponent(cfg.upiId)}` +
+        `&pn=${encodeURIComponent(cfg.payeeName)}` +
+        `&am=${encodeURIComponent(String(ev.amount))}` +
+        `&cu=INR`;
+      window.location.href = upiUrl;
+    } catch {
+      setActionError("Could not start payment. Please try again.");
+    } finally {
+      setPayingId(null);
     }
   };
 
@@ -200,6 +225,17 @@ export default function UserDashboard() {
                       {pendingId === ev._id ? "Re-sending…" : "Re-send Request"}
                     </Button>
                   )}
+
+                  <Button
+                    variant="outlined"
+                    fullWidth
+                    sx={{ mt: 1.5 }}
+                    disabled={payingId === ev._id}
+                    onClick={() => handlePay(ev)}
+                    startIcon={<PaymentsIcon />}
+                  >
+                    {payingId === ev._id ? "Opening UPI…" : "Pay Now"}
+                  </Button>
                 </Box>
               </CardContent>
             </Card>
